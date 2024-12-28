@@ -283,6 +283,128 @@ Authorization: Bearer your_jwt_token
     }
     ```
 
+### POST /captains/register
+
+#### Description
+
+This endpoint is used to register a new captain.
+
+#### Request Body
+
+The request body must be a JSON object with the following fields:
+
+- `fullname.firstname` (string, required): The first name of the captain. Must be at least 3 characters long.
+- `fullname.lastname` (string, optional): The last name of the captain.
+- `email` (string, required): The email address of the captain. Must be a valid email format.
+- `password` (string, required): The password for the captain. Must be at least 6 characters long.
+- `vehicle.color` (string, required): The color of the vehicle. Must be at least 3 characters long.
+- `vehicle.plate` (string, required): The plate number of the vehicle. Must be at least 3 characters long.
+- `vehicle.capacity` (number, required): The capacity of the vehicle. Must be at least 1.
+- `vehicle.vehicleType` (string, required): The type of the vehicle. Must be one of 'car', 'motorcycle', or 'auto'.
+
+#### Example Request
+
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+#### Responses
+
+- **201 Created**
+
+  - **Description**: Captain successfully registered.
+  - **Body**: A JSON object containing the authentication token and captain details.
+  - **Example**:
+    ```json
+    {
+      "token": "your_jwt_token",
+      "captain": {
+        "_id": "captain_id",
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "vehicle": {
+          "color": "red",
+          "plate": "ABC123",
+          "capacity": 4,
+          "vehicleType": "car"
+        }
+      }
+    }
+    ```
+
+- **400 Bad Request**
+
+  - **Description**: Validation errors or missing required fields.
+  - **Body**: A JSON object containing the validation errors.
+  - **Example**:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid Email",
+          "param": "email",
+          "location": "body"
+        },
+        {
+          "msg": "Firstname must be at least 3 characters long",
+          "param": "fullname.firstname",
+          "location": "body"
+        },
+        {
+          "msg": "Password must be atleast 6 characters long",
+          "param": "password",
+          "location": "body"
+        },
+        {
+          "msg": "Color must be atleast 3 characters long",
+          "param": "vehicle.color",
+          "location": "body"
+        },
+        {
+          "msg": "Plate must be atleast 3 characters long",
+          "param": "vehicle.plate",
+          "location": "body"
+        },
+        {
+          "msg": "Capacity must be atleast 1",
+          "param": "vehicle.capacity",
+          "location": "body"
+        },
+        {
+          "msg": "VehicleType must be one of 'car', 'motorcycle', or 'auto'",
+          "param": "vehicle.vehicleType",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+
+- **500 Internal Server Error**
+  - **Description**: An error occurred on the server.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "error": "Internal Server Error"
+    }
+    ```
+
 ## Environment Variables
 
 - `PORT`: The port on which the server runs.
