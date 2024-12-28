@@ -1,8 +1,9 @@
 const userModel = require("../models/user.model")
 const userService = require("../services/user.service")
 const { validationResult } = require("express-validator")
+const blacklistTokenModel = require("../models/blacklistToken.model")
 
-module.exports.registerUser = async (req, res, next) => {
+module.exports.registerUser = async (req, res) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -29,7 +30,7 @@ module.exports.registerUser = async (req, res, next) => {
     }
 }
 
-module.exports.loginUser = async (req, res, next) => {
+module.exports.loginUser = async (req, res) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -52,29 +53,25 @@ module.exports.loginUser = async (req, res, next) => {
 
         const token = user.generateAuthToken();
 
+        // res.cookie('token',token, {
+        //     httpOnly: true,
+        //     secure: process.env.NODE_ENV === 'production',
+        //     maxAge: 3600000
+        // })
+
         return res.status(200).json({ token, user })
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
 }
 
-module.exports.profile = async(req,res,next) => {
-    try {
-        const errors = validationResult(req);
-        if(!errors.isEmpty()){
-            return res.status(400).json({errors: errors.array()})
-        }
+module.exports.getUserprofile = async (req, res) => {
+    return res.status(200).json(req.user)
+}
 
-        const {email} = req.body;
-
-        const user = await userModel.findOne({email});
-
-        if(!user){
-            return res.status(401).json({message: "Invalid user"})
-        }
-
-        return res.status(200).json({user})
-    } catch (error) {
-        return res.status(500).json({error: error.message})
-    }
+module.exports.logoutUser = async (req, res) => {
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    await blacklistTokenModel.create({ token })
+    res.clearCookie("token");
+    res.status(200).json({ message: "Logged out" })
 }

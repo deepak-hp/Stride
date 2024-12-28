@@ -174,6 +174,115 @@ The request body must be a JSON object with the following fields:
     }
     ```
 
+### GET /users/profile
+
+#### Description
+
+This endpoint is used to get the profile of the authenticated user.
+
+#### Request Headers
+
+- `Authorization` (string, required): The JWT token of the authenticated user.
+
+#### Example Request
+
+```http
+GET /users/profile HTTP/1.1
+Host: example.com
+Authorization: Bearer your_jwt_token
+```
+
+#### Responses
+
+- **200 OK**
+
+  - **Description**: User profile retrieved successfully.
+  - **Body**: A JSON object containing the user details.
+  - **Example**:
+    ```json
+    {
+      "_id": "user_id",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com"
+    }
+    ```
+
+- **401 Unauthorized**
+
+  - **Description**: Missing or invalid token.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+- **500 Internal Server Error**
+  - **Description**: An error occurred on the server.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "error": "Internal Server Error"
+    }
+    ```
+
+### GET /users/logout
+
+#### Description
+
+This endpoint is used to log out the authenticated user.
+
+#### Request Headers
+
+- `Authorization` (string, required): The JWT token of the authenticated user.
+
+#### Example Request
+
+```http
+GET /users/logout HTTP/1.1
+Host: example.com
+Authorization: Bearer your_jwt_token
+```
+
+#### Responses
+
+- **200 OK**
+
+  - **Description**: User successfully logged out.
+  - **Body**: A JSON object containing a success message.
+  - **Example**:
+    ```json
+    {
+      "message": "Successfully logged out"
+    }
+    ```
+
+- **401 Unauthorized**
+
+  - **Description**: Missing or invalid token.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+- **500 Internal Server Error**
+  - **Description**: An error occurred on the server.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "error": "Internal Server Error"
+    }
+    ```
+
 ## Environment Variables
 
 - `PORT`: The port on which the server runs.
