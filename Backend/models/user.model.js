@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema({
         },
         lastname: {
             type: String,
-            minlength: [3, "Last name musth be atleaset 3 characters long"]
         }
     },
     email: {
@@ -35,7 +34,7 @@ userSchema.methods.generateAuthToken = function (){
     return token
 }
 
-userSchema.methods.comparePasseord = async function(password){
+userSchema.methods.comparePassword = async function(password){
     return await bcrypt.compare(password, this.password)
 }
 
@@ -44,4 +43,4 @@ userSchema.statics.hashPassword = async function(password){
 }
 
 
-modules.exports = mongoose.model("user", userSchema)
+module.exports = mongoose.model("user", userSchema)
