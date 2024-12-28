@@ -253,7 +253,7 @@ Authorization: Bearer your_jwt_token
 
 - **200 OK**
 
-  - **Description**: User successfully logged out.
+  - **Description**: User successfully logged out and token is blacklisted.
   - **Body**: A JSON object containing a success message.
   - **Example**:
     ```json
