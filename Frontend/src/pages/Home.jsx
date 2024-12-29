@@ -12,7 +12,7 @@ const Home = () => {
       >
         <img className="w-14" src={logo} alt="" />
         <div className="bg-white py-4 px-4">
-          <h2 className="text-2xl font-bold">Get strted with Strider</h2>
+          <h2 className="text-2xl font-bold">Get started with Strider</h2>
           <Link
             to="/login"
             className="w-full flex items-center justify-center bg-black text-white py-3 rounded mt-4"
