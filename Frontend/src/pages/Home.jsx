@@ -15,7 +15,7 @@ const Home = () => {
           <h2 className="text-2xl font-bold">Get started with Strider</h2>
           <Link
             to="/login"
-            className="w-full flex items-center justify-center bg-black text-white py-3 rounded mt-4"
+            className="w-full flex items-center justify-center bg-black text-white py-3 rounded-lg mt-4"
           >
             Continue
           </Link>
