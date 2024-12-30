@@ -3,6 +3,7 @@ import StriderSvg from "../assets/StriderSvg";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
+import LocationSearchPanel from "../components/LocationSearchPanel";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -20,6 +21,7 @@ const Home = () => {
       if (isOpen) {
         gsap.to(panelRef.current, {
           height: "80%",
+          padding: 24,
           opacity: 1,
         });
         gsap.to(panelCloseRef.current, {
@@ -28,6 +30,7 @@ const Home = () => {
       } else {
         gsap.to(panelRef.current, {
           height: "0%",
+          padding: 0,
         });
         gsap.to(panelCloseRef.current, {
           opacity: 0,
@@ -88,7 +91,9 @@ const Home = () => {
             />
           </form>
         </div>
-        <div ref={panelRef} className="bg-red-500 opacity-0"></div>
+        <div ref={panelRef} className="bg-white opacity-0">
+          <LocationSearchPanel />
+        </div>
       </div>
     </div>
   );
