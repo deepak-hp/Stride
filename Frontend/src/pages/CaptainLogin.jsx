@@ -1,17 +1,37 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { CaptainDataContext } from "../context/CaptainContext";
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [captainData, setCaptainData] = useState({});
+  const { setCaptain, isLoading, setIsLoading } =
+    useContext(CaptainDataContext);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setCaptainData({
+    const captainLoginData = {
       email,
       password,
-    });
+    };
+
+    setIsLoading(true);
+    const res = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/captains/login`,
+      captainLoginData
+    );
+    setIsLoading(false);
+
+    if (res.status === 200) {
+      const data = await res.data;
+      setCaptain(data.captain);
+      localStorage.setItem("token", data.token);
+      navigate("/captain-home");
+    }
+
     setEmail("");
     setPassword("");
   };
@@ -44,7 +64,7 @@ const CaptainLogin = () => {
           />
 
           <button className="bg-[#111] text-white font-semibold rounded px-4 py-2 mb-3 w-full text-lg placeholder:text-base">
-            Login
+            {isLoading ? "Logging in..." : "Login"}
           </button>
           <p className="text-center">
             Want to join our fleet?{" "}
