@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserDataContext } from "../context/userContext";
+import StriderSvg from "../assets/StriderSvg";
 
 const UserSignup = () => {
   const [firstName, setFirstName] = useState("");
@@ -43,6 +44,9 @@ const UserSignup = () => {
   return (
     <div className="p-7 flex flex-col justify-between h-screen">
       <div>
+        <div className="flex items-center justify-center w-full">
+          <StriderSvg className="w-28" style={{ fill: "black" }} />
+        </div>
         <form onSubmit={handleSubmit}>
           <h3 className="text-lg font-medium mb-2">Whats your name</h3>
           <div className="flex gap-4 mb-6">

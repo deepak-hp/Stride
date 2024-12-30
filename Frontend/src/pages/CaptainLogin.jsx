@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CaptainDataContext } from "../context/CaptainContext";
+import StriderSvg from "../assets/StriderSvg";
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState("");
@@ -38,6 +39,9 @@ const CaptainLogin = () => {
   return (
     <div className="p-7 flex flex-col justify-between h-screen">
       <div>
+        <div className="flex items-center justify-center w-full">
+          <StriderSvg className="w-28" style={{ fill: "black" }} />
+        </div>
         <form onSubmit={handleSubmit}>
           <h3 className="text-lg font-medium mb-2">Whats your email</h3>
           <input
