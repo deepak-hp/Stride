@@ -4,6 +4,10 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
 import LocationSearchPanel from "../components/LocationSearchPanel";
+import VehiclePanel from "../components/VehiclePanel";
+import ConfirmRide from "../components/ConfirmRide";
+import LookingForDriver from "../components/LookingForDriver";
+import WaitingForDriver from "../components/WaitingForDriver";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -11,6 +15,14 @@ const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
+  const vehiclePannelRef = useRef(null);
+  const [vehiclePanelOpen, setVehiclePanelOpen] = useState(false);
+  const confrimRidePanelRef = useRef(null);
+  const [confrimRidePanelOpen, setConfrimRidePanelOpen] = useState(false);
+  const lookingForDriverPanelRef = useRef(null);
+  const [lookingForDriverOpen, setlookingForDriverOpen] = useState(false);
+  const waitingForDriverPanelRef = useRef(null);
+  const [WaitingForDriverOpen, setWaitingForDriverOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,8 +52,68 @@ const Home = () => {
     [isOpen]
   );
 
+  useGSAP(
+    function () {
+      if (vehiclePanelOpen) {
+        gsap.to(vehiclePannelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(vehiclePannelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [vehiclePanelOpen]
+  );
+
+  useGSAP(
+    function () {
+      if (confrimRidePanelOpen) {
+        gsap.to(confrimRidePanelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(confrimRidePanelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [confrimRidePanelOpen]
+  );
+
+  useGSAP(
+    function () {
+      if (lookingForDriverOpen) {
+        gsap.to(lookingForDriverPanelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(lookingForDriverPanelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [lookingForDriverOpen]
+  );
+
+  useGSAP(
+    function () {
+      if (WaitingForDriverOpen) {
+        gsap.to(waitingForDriverPanelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(waitingForDriverPanelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [WaitingForDriverOpen]
+  );
+
   return (
-    <div className="h-screen relative">
+    <div className="h-screen relative overflow-hidden">
       <StriderSvg
         className="w-16 absolute left-2 top-2 h-min"
         style={{ fill: "black" }}
@@ -92,8 +164,45 @@ const Home = () => {
           </form>
         </div>
         <div ref={panelRef} className="bg-white opacity-0">
-          <LocationSearchPanel />
+          <LocationSearchPanel
+            setVehiclePannelOpen={setVehiclePanelOpen}
+            setPanelOpen={setIsOpen}
+          />
         </div>
+      </div>
+
+      <div
+        ref={vehiclePannelRef}
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12"
+      >
+        <VehiclePanel
+          setVehiclePanelOpen={setVehiclePanelOpen}
+          setConfrimRidePanelOpen={setConfrimRidePanelOpen}
+        />
+      </div>
+
+      <div
+        ref={confrimRidePanelRef}
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12"
+      >
+        <ConfirmRide
+          setConfrimRidePanelOpen={setConfrimRidePanelOpen}
+          setlookingForDriverOpen={setlookingForDriverOpen}
+        />
+      </div>
+
+      <div
+        ref={lookingForDriverPanelRef}
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12"
+      >
+        <LookingForDriver setlookingForDriverOpen={setlookingForDriverOpen} />
+      </div>
+
+      <div
+        ref={waitingForDriverPanelRef}
+        className="fixed w-full z-10 bottom-0 bg-white px-3 py-6 pt-12"
+      >
+        <WaitingForDriver setWaitingForDriverOpen={setWaitingForDriverOpen} />
       </div>
     </div>
   );
