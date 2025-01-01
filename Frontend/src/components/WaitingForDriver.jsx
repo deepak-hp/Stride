@@ -52,6 +52,7 @@ const WaitingForDriver = ({ setWaitingForDriverOpen }) => {
           </div>
         </div>
       </div>
+
       <div>
         {/* <button className="w-full bg-green-600 text-white font-semibold p-2 rounded-lg">
       Confrim Ride
