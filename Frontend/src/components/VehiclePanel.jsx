@@ -1,7 +1,8 @@
 import React from "react";
 
 const VehiclePanel = (props) => {
-  const { setVehiclePanelOpen, setConfrimRidePanelOpen } = props;
+  const { setVehiclePanelOpen, setConfrimRidePanelOpen, fare, setVehicleType } =
+    props;
   return (
     <div>
       <h5
@@ -13,6 +14,7 @@ const VehiclePanel = (props) => {
       <h3 className="text-2xl font-semibold mb-5">Choose a Vehicle</h3>
       <div
         onClick={() => {
+          setVehicleType("car");
           setConfrimRidePanelOpen(true);
         }}
         className="flex border-2 mb-2 active:border-black rounded-xl w-full p-3 items-center justify-between"
@@ -33,11 +35,14 @@ const VehiclePanel = (props) => {
             Affordable, compact rides
           </p>
         </div>
-        <h2 className="text-lg font-semibold">₹190.37</h2>
+        <h2 className="text-lg font-semibold">
+          {`₹${Number(fare.car).toFixed(2)}`}
+        </h2>
       </div>
 
       <div
         onClick={() => {
+          setVehicleType("motor");
           setConfrimRidePanelOpen(true);
         }}
         className="flex border-2 mb-2 active:border-black rounded-xl w-full p-3 items-center justify-between"
@@ -58,11 +63,14 @@ const VehiclePanel = (props) => {
             Affordable, motorcycle rides
           </p>
         </div>
-        <h2 className="text-lg font-semibold">₹65.17</h2>
+        <h2 className="text-lg font-semibold">{`₹${Number(fare.motor).toFixed(
+          2
+        )}`}</h2>
       </div>
 
       <div
         onClick={() => {
+          setVehicleType("auto");
           setConfrimRidePanelOpen(true);
         }}
         className="flex border-2 mb-2 active:border-black rounded-xl w-full p-3 items-center justify-between"
@@ -83,7 +91,9 @@ const VehiclePanel = (props) => {
             Affordable, auto rides
           </p>
         </div>
-        <h2 className="text-lg font-semibold">₹118.07</h2>
+        <h2 className="text-lg font-semibold">{`₹${Number(fare.auto).toFixed(
+          2
+        )}`}</h2>
       </div>
     </div>
   );

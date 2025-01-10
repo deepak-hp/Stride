@@ -614,6 +614,154 @@ Authorization: Bearer your_jwt_token
     }
     ```
 
+### POST /rides/create
+
+#### Description
+
+This endpoint is used to create a new ride.
+
+#### Request Body
+
+The request body must be a JSON object with the following fields:
+
+- `pickup` (string, required): The pickup address. Must be at least 3 characters long.
+- `destination` (string, required): The destination address. Must be at least 3 characters long.
+- `vehicleType` (string, required): The type of the vehicle. Must be one of 'auto', 'car', or 'motorcycle'.
+
+#### Example Request
+
+```json
+{
+  "pickup": "123 Main St",
+  "destination": "456 Elm St",
+  "vehicleType": "car"
+}
+```
+
+#### Responses
+
+- **201 Created**
+
+  - **Description**: Ride successfully created.
+  - **Body**: A JSON object containing the ride details.
+  - **Example**:
+    ```json
+    {
+      "_id": "ride_id",
+      "user": "user_id",
+      "pickup": "123 Main St",
+      "destination": "456 Elm St",
+      "vehicleType": "car",
+      "fare": 100,
+      "otp": "123456"
+    }
+    ```
+
+- **400 Bad Request**
+
+  - **Description**: Validation errors or missing required fields.
+  - **Body**: A JSON object containing the validation errors.
+  - **Example**:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid pickup address",
+          "param": "pickup",
+          "location": "body"
+        },
+        {
+          "msg": "Invalid destination address",
+          "param": "destination",
+          "location": "body"
+        },
+        {
+          "msg": "Invalid vehicle type",
+          "param": "vehicleType",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+
+- **500 Internal Server Error**
+  - **Description**: An error occurred on the server.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "message": "Internal Server Error"
+    }
+    ```
+
+### GET /rides/get-fare
+
+#### Description
+
+This endpoint is used to get the fare for a ride.
+
+#### Request Query Parameters
+
+The request must include the following query parameters:
+
+- `pickup` (string, required): The pickup address. Must be at least 3 characters long.
+- `destination` (string, required): The destination address. Must be at least 3 characters long.
+
+#### Example Request
+
+```http
+GET /rides/get-fare?pickup=123%20Main%20St&destination=456%20Elm%20St HTTP/1.1
+Host: example.com
+Authorization: Bearer your_jwt_token
+```
+
+#### Responses
+
+- **200 OK**
+
+  - **Description**: Fare successfully retrieved.
+  - **Body**: A JSON object containing the fare details.
+  - **Example**:
+    ```json
+    {
+      "auto": 50,
+      "car": 100,
+      "motorcycle": 30
+    }
+    ```
+
+- **400 Bad Request**
+
+  - **Description**: Validation errors or missing required fields.
+  - **Body**: A JSON object containing the validation errors.
+  - **Example**:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid pickup address",
+          "param": "pickup",
+          "location": "query"
+        },
+        {
+          "msg": "Invalid destination address",
+          "param": "destination",
+          "location": "query"
+        }
+      ]
+    }
+    ```
+
+- **500 Internal Server Error**
+  - **Description**: An error occurred on the server.
+  - **Body**: A JSON object containing the error message.
+  - **Example**:
+    ```json
+    {
+      "message": "Internal Server Error"
+    }
+    ```
+
 ## Environment Variables
 
 - `PORT`: The port on which the server runs.
